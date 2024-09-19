@@ -29,7 +29,7 @@ export default function AppBar() {
             </a>
           </Button>
           <Button variant="ghost" size="icon" asChild>
-            <a href={`mailto:${data.email}`} aria-label="Email">
+            <a href={`mailto:${data.email}`} target='blank/' aria-label="Email">
               <Mail className="h-5 w-5" />
             </a>
           </Button>

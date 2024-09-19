@@ -15,6 +15,7 @@ export default function SalaryDashboard() {
   const [sortConfig, setSortConfig] = useState<{ key: keyof AggregatedData; direction: 'asc' | 'desc' } | null>(null)
   const [selectedYear, setSelectedYear] = useState<string | null>(null)
   const [isChatbotOpen, setIsChatbotOpen] = useState<boolean>(false)
+  const [isChatBotSpan, setIsChatBotSpan] = useState<boolean>(true)
 
   useEffect(() => {
     setData(aggregateData(salaryDataForTask))
@@ -49,9 +50,9 @@ export default function SalaryDashboard() {
   }
 
   return (
-    <>
-      <AppBar/>
-      <div className="container mx-auto p-4 relative min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
+      <AppBar />
+      <div className="container mx-auto p-4 relative">
         <SalaryDashBoardTable
           data={sortedData} 
           sortConfig={sortConfig} 
@@ -65,27 +66,44 @@ export default function SalaryDashboard() {
         />
         <div className="fixed bottom-6 right-6 z-50">
           {isChatbotOpen ? (
-            <div className="bg-background rounded-xl shadow-lg w-full h-full flex flex-col">
-                <div className='relative p-4' onClick={toggleChatbot}>
-                  <div className='flex justify-center items-center font-sans font-extrabold'>ChatBot </div>
+            <div className="bg-background border border-border rounded-xl shadow-lg flex flex-col">
+                <div className='relative p-4 border-b border-border' onClick={toggleChatbot}>
+                  <div className='flex justify-center items-center font-sans font-extrabold'>ChatBot</div>
                   <X className="absolute top-4 right-4 h-6 w-6 hover:cursor-pointer"/>
                   <span className="sr-only">Close chatbot</span>
                 </div>
-                <Chatbot/>
+                <div className="flex-grow overflow-auto">
+                  <Chatbot/>
+                </div>
             </div>
           ) : (
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full w-12 h-12"
-              onClick={toggleChatbot}
-            >
-              <Bot className="h-6 w-6" />
-              <span className="sr-only">Open chatbot</span>
-            </Button>
+            <div className='flex flex-col items-end space-y-2'>
+              {isChatBotSpan && (
+                <p className='p-2 flex gap-2 bg-background border border-border rounded-xl max-w-xs'>
+                  Try Me I will Help Out of Your Doubts 
+                  <button 
+                    className='flex justify-center items-center hover:bg-muted hover:text-muted-foreground rounded-full p-1'
+                    onClick={() => setIsChatBotSpan(false)}
+                  >
+                    <X className='h-4 w-4'/>
+                  </button>
+                </p>
+              )}
+              <div className='flex'>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full"
+                  onClick={toggleChatbot}
+                >
+                  <Bot className="h-7 w-7" />
+                  <span className="sr-only">Open chatbot</span>
+                </Button>
+              </div>
+            </div>
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }

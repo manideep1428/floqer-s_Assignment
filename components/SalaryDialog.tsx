@@ -11,7 +11,7 @@ interface JobTitlesDialogProps {
 export function JobTitlesDialog({ selectedYear, data, onClose }: JobTitlesDialogProps) {
   return (
     <Dialog open={selectedYear !== null} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[80vh] flex flex-col">
+      <DialogContent className="max-w-3xl max-h-[80vh] flex flex-col bg-black text-white dark:bg-white dark:text-black">
         <DialogHeader>
           <DialogTitle>Job Titles for {selectedYear}</DialogTitle>
         </DialogHeader>
